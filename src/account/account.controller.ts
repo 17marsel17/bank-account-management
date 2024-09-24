@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
-  @Post()
-  create(@Body() createAccountDto: CreateAccountDto) {
+  @Post('create')
+  createAccount(@Body() createAccountDto: CreateAccountDto) {
     return this.accountService.create(createAccountDto);
   }
 
-  @Get()
-  findAll() {
-    return this.accountService.findAll();
+  @Get(':id/balance')
+  getBalance(@Param('id') accountId: string) {
+    return this.accountService.getBalance(accountId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.accountService.findOne(+id);
+  @Post(':id/deposit')
+  deposit(@Param('id') accountId: string, @Body('amount') amount: number) {
+    return this.accountService.deposit(accountId, amount);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountService.update(+id, updateAccountDto);
+  @Post(':id/withdraw')
+  withdraw(@Param('id') accountId: string, @Body('amount') amount: number) {
+    return this.accountService.withdraw(accountId, amount);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.accountService.remove(+id);
+  @Post(':id/block')
+  blockAccount(@Param('id') accountId: string) {
+    return this.accountService.blockAccount(accountId);
+  }
+
+  @Get(':id/transactions')
+  getTransactionHistory(@Param('id') accountId: string) {
+    return this.accountService.getTransactionHistory(accountId);
   }
 }
