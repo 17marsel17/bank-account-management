@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from './entities/account.entity';
 import { Repository } from 'typeorm';
 import { Transaction } from '../transaction/entities/transaction.entity';
-import { ClientService } from 'src/client/client.service';
+import { ClientService } from '../client/client.service';
 
 @Injectable()
 export class AccountService {

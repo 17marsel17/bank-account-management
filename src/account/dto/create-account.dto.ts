@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsUUID, Min } from 'class-validator';
 
 export class CreateAccountDto {
   @ApiProperty({ description: 'id клиента' })
@@ -10,11 +10,13 @@ export class CreateAccountDto {
   @ApiProperty({ description: 'баланс' })
   @IsNotEmpty()
   @IsNumber()
+  @Min(0)
   balance: number;
 
   @ApiProperty({ description: 'дневной лимит вывода' })
   @IsNotEmpty()
   @IsNumber()
+  @Min(0)
   daily_withdrawal_limit: number;
 
   @ApiProperty({ description: 'активность' })
