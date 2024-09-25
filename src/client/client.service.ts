@@ -10,8 +10,10 @@ export class ClientService {
   constructor(
     @InjectRepository(Client) private clientRepository: Repository<Client>,
   ) {}
-  create(createClientDto: CreateClientDto) {
-    return 'This action adds a new client';
+  create(createClientDto: CreateClientDto): Promise<Client> {
+    const account = this.clientRepository.create(createClientDto);
+
+    return this.clientRepository.save(account);
   }
 
   findAll() {

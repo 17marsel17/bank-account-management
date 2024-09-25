@@ -10,13 +10,17 @@ import {
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Client } from './entities/client.entity';
 
+@ApiTags('Client')
 @Controller('client')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
+  @ApiOperation({ description: 'Добавление клиента' })
   @Post()
-  create(@Body() createClientDto: CreateClientDto) {
+  create(@Body() createClientDto: CreateClientDto): Promise<Client> {
     return this.clientService.create(createClientDto);
   }
 
