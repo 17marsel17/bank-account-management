@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { Throttle } from '@nestjs/throttler';
+import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { WithdrawDto } from './dto/withdraw.dto';
 import { Transaction } from '../transaction/entities/transaction.entity';
@@ -16,6 +16,7 @@ export class AccountController {
     summary: 'Создание аккаунта',
   })
   @Post('create')
+  @SkipThrottle()
   @ApiResponse({
     status: 200,
     type: Account,
@@ -27,7 +28,6 @@ export class AccountController {
   @ApiOperation({
     summary: 'Получение баланса',
   })
-  @Throttle({ default: { limit: 10, ttl: 86400 } }) // 10 запросов в сутки (86400 секунд)
   @Get(':id/balance')
   @ApiResponse({
     status: 200,
@@ -41,6 +41,7 @@ export class AccountController {
     summary: 'Пополнение счета',
   })
   @Post(':id/deposit')
+  @SkipThrottle()
   deposit(@Param('id') accountId: string, @Body() dto: WithdrawDto) {
     return this.accountService.deposit(accountId, dto.amount);
   }
@@ -49,6 +50,7 @@ export class AccountController {
     summary: 'Снятие со счета',
   })
   @Post(':id/withdraw')
+  @SkipThrottle()
   withdraw(@Param('id') accountId: string, @Body() dto: WithdrawDto) {
     return this.accountService.withdraw(accountId, dto.amount);
   }
@@ -57,6 +59,7 @@ export class AccountController {
     summary: 'Блокировка аккаунта',
   })
   @Post(':id/block')
+  @SkipThrottle()
   blockAccount(@Param('id') accountId: string) {
     return this.accountService.blockAccount(accountId);
   }
@@ -65,6 +68,7 @@ export class AccountController {
     summary: 'История транзакций',
   })
   @Get(':id/transactions')
+  @SkipThrottle()
   @ApiResponse({
     status: 200,
     isArray: true,

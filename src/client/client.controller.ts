@@ -12,8 +12,10 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Client } from './entities/client.entity';
+import { SkipThrottle } from '@nestjs/throttler';
 
 @ApiTags('Client')
+@SkipThrottle()
 @Controller('client')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
