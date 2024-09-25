@@ -1,85 +1,91 @@
+# Управление банковским аккаунтом
+
+Это Backend-приложение для проекта "Управление банковским аккаунтом". Создано с использованием фреймворка [NestJs](http://nestjs.com/)
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Оглавление
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- [Техническая документация](#оглавление)
+  - [Начало работы](#-начало-работы)
+  - [Разработка](#-разработка)
+  - [Сборка и развертывание](#-сборка-и-развертывание)
+  - [Тестирование](#тестирование)
+- [Структура проекта](#-структура)
 
-## Description
+## 🚀 Начало работы
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Для начала работы с этим проектом, вам потребуется выполнить несколько шагов.
 
-## Project setup
+1. Склонируйте этот репозиторий на ваш компьютер с помощью следующей команды:
 
 ```bash
-$ yarn install
+git clone https://github.com/17marsel17/bank-account-management.git bank-account-management
 ```
 
-## Compile and run the project
+2. Перейдите в директорию проекта:
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+cd bank-account-management
 ```
 
-## Run tests
+3. Установите зависимости:
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+yarn install
 ```
 
-## Resources
+### 💻 Разработка
 
-Check out a few resources that may come in handy when working with NestJS:
+Скопируйте dev переменные
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+cp .env.example .env
+```
 
-## Support
+Для запуска приложения в режиме разработки используйте следующую команду:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+yarn run start:dev
+```
 
-## Stay in touch
+### 🏗️ Сборка и развертывание
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Для сборки приложения для продакшн используйте следующую команду:
 
-## License
+```bash
+yarn run start:prod
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Тестирование
+
+1. Для запуска юнит-тестов используем команду
+
+```bash
+yarn run test
+```
+
+2. Для запуска e2e-тестов используем команду
+
+```bash
+yarn run test:e2e
+```
+
+### 🗂️ Структура
+
+```
+├── 📁 node_modules                # Зависимости проекта (установленные пакеты)
+└── 📁 src                         # Основная папка с кодом
+    ├── 📁 database                # Модуль базы данных
+    ├── 📄 app.controller.spec.ts  # Юнит-тест для контроллера приложения
+    ├── 📄 app.controller.ts       # Базовый контроллер с одним маршрутом
+    ├── 📄 app.module.ts           # Корневой модуль приложения, все прочие модули, контроллеры или провайдеры подключаются тут
+    ├── 📄 app.service.ts          # Сервис, содержит в себе реализацию бизнес-логики, прочие функции которые нужны контроллерам
+    └── 📄 main.ts                 # Файл, входа приложения, создает экземпляр приложения Nest
+├── 📁 test                        # e2e-тесты
+├── 📄 package.json                # Файл с метаданными и зависимостями проекта
+├── 📄 README.md                   # Файл с описанием проекта
+└── 📄 yarn.lock                   # Файл, автоматически создаваемый при установке пакетов с помощью Yarn
+```
