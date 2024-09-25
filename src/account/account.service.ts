@@ -82,6 +82,11 @@ export class AccountService {
     }
 
     account.balance -= amount;
+
+    if (account.balance < 0) {
+      throw new BadRequestException('Баланс не может быть отрицательным');
+    }
+
     await this.accountRepository.save(account);
 
     const transaction = this.transactionRepository.create({

@@ -8,6 +8,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Min } from 'class-validator';
 
 @Entity()
 export class Account {
@@ -23,7 +24,7 @@ export class Account {
   person_id: string;
 
   @Column({ type: 'float' })
-  @ApiProperty({ description: 'баланс', minimum: 0 })
+  @ApiProperty({ description: 'баланс' })
   balance: number;
 
   @Column({ type: 'float' })
