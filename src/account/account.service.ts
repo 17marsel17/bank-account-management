@@ -1,9 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Account } from './entities/account.entity';
 import { Repository } from 'typeorm';
 import { Transaction } from '../transaction/entities/transaction.entity';
+import { ClientService } from 'src/client/client.service';
 
 @Injectable()
 export class AccountService {
@@ -11,11 +16,19 @@ export class AccountService {
     @InjectRepository(Account) private accountRepository: Repository<Account>,
     @InjectRepository(Transaction)
     private transactionRepository: Repository<Transaction>,
+    private clientService: ClientService,
   ) {}
 
   // Создание аккаунта
   async create(createAccountDto: CreateAccountDto): Promise<Account> {
-    const account = await this.accountRepository.create(createAccountDto);
+    const client = await this.clientService.findOne(createAccountDto.person_id);
+
+    if (!client) {
+      throw new NotFoundException(
+        `Клиент с id ${createAccountDto.person_id} не найден`,
+      );
+    }
+    const account = this.accountRepository.create(createAccountDto);
 
     return this.accountRepository.save(account);
   }
@@ -25,6 +38,11 @@ export class AccountService {
     const account = await this.accountRepository.findOne({
       where: { id: accountId },
     });
+
+    if (!account) {
+      throw new NotFoundException(`Клиент с id ${accountId} не найден`);
+    }
+
     return account.balance;
   }
 
@@ -33,6 +51,11 @@ export class AccountService {
     const account = await this.accountRepository.findOne({
       where: { id: accountId },
     });
+
+    if (!account) {
+      throw new NotFoundException(`Клиент с id ${accountId} не найден`);
+    }
+
     account.balance += amount;
     await this.accountRepository.save(account);
 
@@ -40,6 +63,7 @@ export class AccountService {
       account,
       value: amount,
     });
+
     await this.transactionRepository.save(transaction);
   }
 
@@ -49,8 +73,12 @@ export class AccountService {
       where: { id: accountId },
     });
 
+    if (!account) {
+      throw new NotFoundException(`Клиент с id ${accountId} не найден`);
+    }
+
     if (amount > account.daily_withdrawal_limit) {
-      throw new Error('Exceeded daily withdrawal limit');
+      throw new BadRequestException('Превышен дневной лимит снятия средств');
     }
 
     account.balance -= amount;
@@ -68,8 +96,12 @@ export class AccountService {
     const account = await this.accountRepository.findOne({
       where: { id: accountId },
     });
-    account.active = false;
-    await this.accountRepository.save(account);
+
+    if (!account) {
+      throw new NotFoundException(`Клиент с id ${accountId} не найден`);
+    }
+
+    await this.accountRepository.update(accountId, { active: false });
   }
 
   // История транзакций

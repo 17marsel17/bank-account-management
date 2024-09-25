@@ -23,7 +23,7 @@ export class Account {
   person_id: string;
 
   @Column({ type: 'float' })
-  @ApiProperty({ description: 'баланс' })
+  @ApiProperty({ description: 'баланс', minimum: 0 })
   balance: number;
 
   @Column({ type: 'float' })
