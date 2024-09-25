@@ -2,18 +2,26 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
 
-  app.enableCors({
-    origin: ['http://localhost:3000'], // Список разрешенных источников
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-  });
+  const configService = app.get(ConfigService);
 
+  const corsOrigin = configService.get<string[]>(
+    `CORS_AVAILABLE_ORIGINS_ARRAY`,
+  );
+
+  if (corsOrigin) {
+    app.enableCors({
+      origin: corsOrigin,
+      methods: 'GET,HEAD,PUT,PATCH,POST',
+      credentials: true,
+    });
+  }
   const config = new DocumentBuilder()
     .setTitle('Управление банковским аккаунтом API')
     .setVersion('1.0')
