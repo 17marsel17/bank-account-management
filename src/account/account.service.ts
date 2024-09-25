@@ -9,13 +9,13 @@ import { Account } from './entities/account.entity';
 import { Repository } from 'typeorm';
 import { Transaction } from '../transaction/entities/transaction.entity';
 import { ClientService } from '../client/client.service';
+import { TransactionService } from '../transaction/transaction.service';
 
 @Injectable()
 export class AccountService {
   constructor(
     @InjectRepository(Account) private accountRepository: Repository<Account>,
-    @InjectRepository(Transaction)
-    private transactionRepository: Repository<Transaction>,
+    private transactionService: TransactionService,
     private clientService: ClientService,
   ) {}
 
@@ -59,12 +59,10 @@ export class AccountService {
     account.balance += amount;
     await this.accountRepository.save(account);
 
-    const transaction = this.transactionRepository.create({
-      account,
+    await this.transactionService.create({
+      account_id: accountId,
       value: amount,
     });
-
-    await this.transactionRepository.save(transaction);
   }
 
   // Снятие со счета
@@ -89,11 +87,10 @@ export class AccountService {
 
     await this.accountRepository.save(account);
 
-    const transaction = this.transactionRepository.create({
-      account,
+    await this.transactionService.create({
+      account_id: accountId,
       value: -amount,
     });
-    await this.transactionRepository.save(transaction);
   }
 
   // Блокировка аккаунта
@@ -111,8 +108,6 @@ export class AccountService {
 
   // История транзакций
   async getTransactionHistory(accountId: string): Promise<Transaction[]> {
-    return this.transactionRepository.find({
-      where: { account: { id: accountId } },
-    });
+    return this.transactionService.findForAccount(accountId);
   }
 }

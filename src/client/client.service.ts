@@ -17,18 +17,18 @@ export class ClientService {
   }
 
   findAll() {
-    return `This action returns all client`;
+    return this.clientRepository.find();
   }
 
   findOne(id: string) {
     return this.clientRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateClientDto: UpdateClientDto) {
-    return `This action updates a #${id} client`;
+  update(id: string, updateClientDto: UpdateClientDto) {
+    return this.clientRepository.update(id, updateClientDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} client`;
+  remove(id: string) {
+    return this.clientRepository.delete(id);
   }
 }
